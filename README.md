@@ -6,7 +6,7 @@
 Manages ACI Routed Domain
 
 Location in GUI:
-`Tenants` » `XXX`
+`Fabric` » `Access Policies` » `Physical and External Domains` » `L3 Domains`
 
 ## Examples
 
