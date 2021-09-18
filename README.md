@@ -1,9 +1,9 @@
 <!-- BEGIN_TF_DOCS -->
-[![Tests](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml)
+[![Tests](https://github.com/netascode/terraform-aci-routed-domain/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-routed-domain/actions/workflows/test.yml)
 
-# Terraform ACI Scaffolding Module
+# Terraform ACI Routed Domain Module
 
-Description
+Manages ACI Routed Domain
 
 Location in GUI:
 `Tenants` » `XXX`
@@ -11,13 +11,13 @@ Location in GUI:
 ## Examples
 
 ```hcl
-module "aci_scaffolding" {
-  source  = "netascode/scaffolding/aci"
+module "aci_routed_domain" {
+  source  = "netascode/routed-domain/aci"
   version = ">= 0.0.1"
 
-  name        = "ABC"
-  alias       = "ABC-ALIAS"
-  description = "My Description"
+  name                 = "RD1"
+  vlan_pool            = "VP1"
+  vlan_pool_allocation = "dynamic"
 }
 
 ```
@@ -39,20 +39,21 @@ module "aci_scaffolding" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_name"></a> [name](#input\_name) | Tenant name. | `string` | n/a | yes |
-| <a name="input_alias"></a> [alias](#input\_alias) | Tenant alias. | `string` | `""` | no |
-| <a name="input_description"></a> [description](#input\_description) | Tenant description. | `string` | `""` | no |
+| <a name="input_name"></a> [name](#input\_name) | Routed domain name. | `string` | n/a | yes |
+| <a name="input_vlan_pool"></a> [vlan\_pool](#input\_vlan\_pool) | Vlan pool name. | `string` | n/a | yes |
+| <a name="input_vlan_pool_allocation"></a> [vlan\_pool\_allocation](#input\_vlan\_pool\_allocation) | Vlan pool allocation mode. Choices: `static`, `dynamic`. | `string` | `"static"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `fvTenant` object. |
-| <a name="output_name"></a> [name](#output\_name) | Tenant name. |
+| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `l3extDomP` object. |
+| <a name="output_name"></a> [name](#output\_name) | Routed domain name. |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aci_rest.fvTenant](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.infraRsVlanNs](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.l3extDomP](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
 <!-- END_TF_DOCS -->

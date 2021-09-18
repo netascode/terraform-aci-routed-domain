@@ -1,5 +1,5 @@
 variable "name" {
-  description = "Tenant name."
+  description = "Routed domain name."
   type        = string
 
   validation {
@@ -8,24 +8,23 @@ variable "name" {
   }
 }
 
-variable "alias" {
-  description = "Tenant alias."
+variable "vlan_pool" {
+  description = "Vlan pool name."
   type        = string
-  default     = ""
 
   validation {
-    condition     = can(regex("^[a-zA-Z0-9_.-]{0,64}$", var.alias))
+    condition     = can(regex("^[a-zA-Z0-9_.-]{0,64}$", var.vlan_pool))
     error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
   }
 }
 
-variable "description" {
-  description = "Tenant description."
+variable "vlan_pool_allocation" {
+  description = "Vlan pool allocation mode. Choices: `static`, `dynamic`."
   type        = string
-  default     = ""
+  default     = "static"
 
   validation {
-    condition     = can(regex("^[a-zA-Z0-9\\!#$%()*,-./:;@ _{|}~?&+]{0,128}$", var.description))
-    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `\\`, `!`, `#`, `$`, `%`, `(`, `)`, `*`, `,`, `-`, `.`, `/`, `:`, `;`, `@`, ` `, `_`, `{`, `|`, }`, `~`, `?`, `&`, `+`. Maximum characters: 128."
+    condition     = contains(["static", "dynamic"], var.vlan_pool_allocation)
+    error_message = "Allowed values are `static` or `dynamic`."
   }
 }
