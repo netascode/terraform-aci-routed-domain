@@ -1,6 +1,6 @@
 module "aci_routed_domain" {
   source  = "netascode/routed-domain/aci"
-  version = ">= 0.0.1"
+  version = ">= 0.1.0"
 
   name                 = "RD1"
   vlan_pool            = "VP1"

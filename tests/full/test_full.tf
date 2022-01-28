@@ -5,8 +5,8 @@ terraform {
     }
 
     aci = {
-      source  = "netascode/aci"
-      version = ">=0.2.0"
+      source  = "CiscoDevNet/aci"
+      version = ">=2.0.0"
     }
   }
 }
@@ -19,7 +19,7 @@ module "main" {
   vlan_pool_allocation = "dynamic"
 }
 
-data "aci_rest" "l3extDomP" {
+data "aci_rest_managed" "l3extDomP" {
   dn = "uni/l3dom-${module.main.name}"
 
   depends_on = [module.main]
@@ -30,13 +30,13 @@ resource "test_assertions" "l3extDomP" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.l3extDomP.content.name
+    got         = data.aci_rest_managed.l3extDomP.content.name
     want        = module.main.name
   }
 }
 
-data "aci_rest" "infraRsVlanNs" {
-  dn = "${data.aci_rest.l3extDomP.id}/rsvlanNs"
+data "aci_rest_managed" "infraRsVlanNs" {
+  dn = "${data.aci_rest_managed.l3extDomP.id}/rsvlanNs"
 
   depends_on = [module.main]
 }
@@ -46,7 +46,7 @@ resource "test_assertions" "infraRsVlanNs" {
 
   equal "tDn" {
     description = "tDn"
-    got         = data.aci_rest.infraRsVlanNs.content.tDn
+    got         = data.aci_rest_managed.infraRsVlanNs.content.tDn
     want        = "uni/infra/vlanns-[VP1]-dynamic"
   }
 }
