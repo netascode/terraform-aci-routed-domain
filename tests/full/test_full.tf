@@ -19,6 +19,7 @@ module "main" {
   name                 = "RD1"
   vlan_pool            = "VP1"
   vlan_pool_allocation = "dynamic"
+  security_domains     = ["SEC1"]
 }
 
 data "aci_rest_managed" "l3extDomP" {
@@ -50,5 +51,21 @@ resource "test_assertions" "infraRsVlanNs" {
     description = "tDn"
     got         = data.aci_rest_managed.infraRsVlanNs.content.tDn
     want        = "uni/infra/vlanns-[VP1]-dynamic"
+  }
+}
+
+data "aci_rest_managed" "aaaDomainRef" {
+  dn = "${data.aci_rest_managed.l3extDomP.dn}/domain-SEC1"
+
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "aaaDomainRef" {
+  component = "aaaDomainRef"
+
+  equal "name" {
+    description = "name"
+    got         = data.aci_rest_managed.aaaDomainRef.content.name
+    want        = "SEC1"
   }
 }
