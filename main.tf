@@ -13,3 +13,12 @@ resource "aci_rest_managed" "infraRsVlanNs" {
     tDn = "uni/infra/vlanns-[${var.vlan_pool}]-${var.vlan_pool_allocation}"
   }
 }
+
+resource "aci_rest_managed" "aaaDomainRef" {
+  for_each   = toset(var.security_domains)
+  dn         = "${aci_rest_managed.l3extDomP.dn}/domain-${each.value}"
+  class_name = "aaaDomainRef"
+  content = {
+    name = each.value
+  }
+}

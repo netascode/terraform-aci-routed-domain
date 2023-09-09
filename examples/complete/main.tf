@@ -5,4 +5,5 @@ module "aci_routed_domain" {
   name                 = "RD1"
   vlan_pool            = "VP1"
   vlan_pool_allocation = "dynamic"
+  security_domains     = ["SEC1"]
 }
