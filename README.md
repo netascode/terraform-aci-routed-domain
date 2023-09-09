@@ -13,7 +13,7 @@ Location in GUI:
 ```hcl
 module "aci_routed_domain" {
   source  = "netascode/routed-domain/aci"
-  version = ">= 0.1.0"
+  version = ">= 0.1.1"
 
   name                 = "RD1"
   vlan_pool            = "VP1"
